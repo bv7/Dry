@@ -1,0 +1,119 @@
+:
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сушильный шкаф</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="../../jquery.min.js"></script>
+<script src="../../memvar.js" autoupdate="1000"></script>
+<script>
+var temp_out;
+var temp_set_w, temp_set;
+var PWM;
+var P,I,D;
+var Date,Peroid,Impulse;
+if (temp_set_w != temp_set) {
+	temp_set_w = temp_set;
+}
+temp_out ;
+</script>
+<style>
+.value {
+font-weight: bold;
+font-size: 30px;
+}
+.panel {
+border: none;
+border-radius: 10px;
+background-color: lightskyblue;
+margin: 10px 10px 10px 10px;
+padding: 10px 10px 10px 10px;
+}
+</style>
+</head>
+<body>
+<div>
+
+<div>
+  <div>
+    <h1><span style="value">Автоматика-Р</span>
+	<span>Управление сушильным шкафом</span></h1>
+  </div>
+</div>
+
+<div class="value">
+  <div>
+    <img src="./img/sun.png"></img> <!-- картинка температуры -->
+    <table class="panel">
+      <tr>
+        <td>Температура</td>
+        <td><span class="value" data-var=" temp_out">25</span><span class="value"> °C</span></td>
+      </tr>
+	  
+	  <tr>
+        <td>Шим, %</td>
+        <td><span class="value" data-var="PWM">##</span><span class="value"> %</span></td>
+      </tr>
+	  
+	  <tr>
+        <td>Уставка</td>
+        <td><span class="value" data-var="temp_set"> </span><span class="value"> %</span></td>
+      </tr>
+	  
+      <tr>
+        <td>Уставка</td>
+        <td><span class="value" data-var="temp_set">25</span><span> °C</span><input data-var-write="temp_set" type="range" min="0" max="50" /></td>
+      </tr>
+    </table>
+  </div>
+  
+  <div>
+    <img src="./img/sun.png"></img> <!--картинка ввлажности-->
+    <table class="panel">
+      <tr>
+        <td>Влажность</td>
+        <td><span class="value" data-var="hum_out">25</span><span class="value">%</span></td>
+      </tr>
+      <tr>
+        <td>Уставка</td>
+        <td><span>25</span><span>%</span><input type="range" min="0" max="100" data-var-write="hum_set" /></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div>
+  <div>
+    Программы:
+  </div>
+  <div>
+    <button type="button" onclick="Manual()">Ручной режим</button>
+  </div>
+  
+  <div>
+    <button type="button" onclick="Automat()">Автоматический режим"</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+var shmem = new Shmem;
+function Manual() {
+  let manual = shmem.getVarsByName()["manual "];
+  manual.value = 1;
+  shmem.saveVariables([manual]);
+}
+function Automat() {
+  let automat = shmem.getVarsByName()["automat "];
+  automat.value = 1;
+  shmem.saveVariables([automat]);
+}
+</script>
+</body>
+</html>
